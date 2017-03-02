@@ -83,7 +83,8 @@ describe('/schedules', () => {
               });
               done();
             });
-*/          .end((err, res) => { deleteScheduleAggregate(createdSchedulePath.split('/schedules/')[1], done, err);});
+*/
+            .end((err, res) => { deleteScheduleAggregate(createdSchedulePath.split('/schedules/')[1], done, err);});
         });
     });
   });
@@ -111,7 +112,7 @@ describe('/schedules/:scheduleId/users/:userId/candidates/:candidateId', () => {
           Candidate.findOne({
             where: { scheduleId: scheduleId }
           }).then((candidate) => {
-            // 更新がされることをテスト
+// 更新がされることをテスト
             request(app)
               .post(`/schedules/${scheduleId}/users/${0}/candidates/${candidate.candidateId}`)
               .send({ availability: 2 }) // 出席に更新
