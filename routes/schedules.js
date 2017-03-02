@@ -101,13 +101,13 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
             });
           });
 
-//          console.log(availabilityMapMap); // TODO 除去する
+          console.log(availabilityMapMap); // TODO 除去する
 
           res.render('schedule', {
             user: req.user,
             schedule: schedule,
             candidates: candidates,
-            users: [req.user],
+            users: users,
             availabilityMapMap: availabilityMapMap
           });
         });
