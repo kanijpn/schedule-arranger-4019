@@ -56,7 +56,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           candidates: candidates,
           users: [req.user]
 */
-        // データベースからその予定の全ての出欠を取得する
+// データベースからその予定の全ての出欠を取得する
         Availability.findAll({
           include: [
             {
@@ -67,7 +67,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           where: { scheduleId: schedule.scheduleId },
           order: '"user.username" ASC, "candidateId" ASC'
         }).then((availabilities) => {
-          // 出欠 MapMap(キー:ユーザー ID, 値:出欠Map(キー:候補 ID, 値:出欠)) を作成する
+// 出欠 MapMap(キー:ユーザー ID, 値:出欠Map(キー:候補 ID, 値:出欠)) を作成する
           const availabilityMapMap = new Map(); // key: userId, value: Map(key: candidateId, availability)
           availabilities.forEach((a) => {
             const map = availabilityMapMap.get(a.user.userId) || new Map();
@@ -75,7 +75,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
             availabilityMapMap.set(a.user.userId, map);
           });
 
-          // 閲覧ユーザーと出欠に紐づくユーザーからユーザー Map (キー:ユーザー ID, 値:ユーザー) を作る
+// 閲覧ユーザーと出欠に紐づくユーザーからユーザー Map (キー:ユーザー ID, 値:ユーザー) を作る
           const userMap = new Map(); // key: userId, value: User
           userMap.set(parseInt(req.user.id), {
               isSelf: true,
@@ -90,7 +90,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
             });
           });
 
-          // 全ユーザー、全候補で二重ループしてそれぞれの出欠の値がない場合には、「欠席」を設定する
+// 全ユーザー、全候補で二重ループしてそれぞれの出欠の値がない場合には、「欠席」を設定する
           const users = Array.from(userMap).map((keyValue) => keyValue[1]);
           users.forEach((u) => {
             candidates.forEach((c) => {
